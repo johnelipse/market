@@ -1,12 +1,12 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export type Params = {
+export type idProp = {
   id: string;
 };
 export async function GET(
   request: NextRequest,
-  { params: { id } }: { params: Params }
+  { params: { id } }: { params: idProp }
 ) {
   try {
     const category = await db.category.findUnique({
@@ -35,7 +35,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params: { id } }: { params: Params }
+  { params: { id } }: { params: idProp }
 ) {
   try {
     await db.category.delete({
