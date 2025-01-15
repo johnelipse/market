@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        message: "created",
+        message: "success",
         data: newProduct,
       },
       { status: 201 }
@@ -46,7 +46,7 @@ export async function GET() {
     });
     return NextResponse.json(
       {
-        message: "fetched",
+        message: "success",
         data: products,
       },
       { status: 200 }

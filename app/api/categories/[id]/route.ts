@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id") || "";
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
 
   try {
     const category = await db.category.findUnique({
@@ -13,7 +15,7 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        status: "fetched",
+        message: "success",
         data: category,
       },
       { status: 200 }
@@ -22,7 +24,7 @@ export async function GET(request: NextRequest) {
     console.log(error);
     return NextResponse.json(
       {
-        status: "failed",
+        message: "failed",
         data: null,
       },
       { status: 500 }
@@ -30,9 +32,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id") || "";
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
   try {
     await db.category.delete({
       where: {
@@ -41,7 +46,7 @@ export async function DELETE(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        message: "Deleted",
+        message: "success",
       },
       { status: 200 }
     );

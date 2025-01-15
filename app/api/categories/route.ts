@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        status: "created",
+        message: "success",
         data: category,
       },
       { status: 201 }
@@ -33,7 +33,7 @@ export async function GET() {
     const categories = await db.category.findMany();
     return NextResponse.json(
       {
-        status: "fetched",
+        message: "success",
         data: categories,
       },
       { status: 200 }
@@ -42,7 +42,7 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        status: "failed",
+        message: "failed",
         data: null,
       },
       { status: 500 }

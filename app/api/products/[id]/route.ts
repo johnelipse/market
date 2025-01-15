@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id") || "";
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   try {
     const product = await db.product.findUnique({
       where: {
@@ -12,7 +14,7 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        message: "fetched",
+        message: "success",
         data: product,
       },
       { status: 200 }
@@ -29,9 +31,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id") || "";
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   try {
     await db.product.delete({
       where: {
@@ -40,7 +44,7 @@ export async function DELETE(request: NextRequest) {
     });
     return NextResponse.json(
       {
-        message: "Deleted",
+        message: "success",
       },
       { status: 200 }
     );
