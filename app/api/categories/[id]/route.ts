@@ -6,8 +6,9 @@ export type idProp = {
 };
 export async function GET(
   request: NextRequest,
-  { params: { id } }: { params: idProp }
+  { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const category = await db.category.findUnique({
       where: {

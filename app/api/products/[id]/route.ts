@@ -4,8 +4,9 @@ import { idProp } from "../../categories/[id]/route";
 
 export async function GET(
   request: NextRequest,
-  { params: { id } }: { params: idProp }
+  { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const product = await db.product.findUnique({
       where: {
