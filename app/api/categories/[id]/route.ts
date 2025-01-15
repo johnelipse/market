@@ -1,14 +1,10 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export type idProp = {
-  id: string;
-};
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id") || "";
+
   try {
     const category = await db.category.findUnique({
       where: {
@@ -34,10 +30,9 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params: { id } }: { params: idProp }
-) {
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id") || "";
   try {
     await db.category.delete({
       where: {

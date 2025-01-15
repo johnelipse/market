@@ -1,12 +1,9 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { idProp } from "../../categories/[id]/route";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id") || "";
   try {
     const product = await db.product.findUnique({
       where: {
@@ -32,10 +29,9 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params: { id } }: { params: idProp }
-) {
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id") || "";
   try {
     await db.product.delete({
       where: {
